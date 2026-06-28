@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Earnix Admin Login</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+background:#050505;
+display:flex;
+justify-content:center;
+align-items:center;
+height:100vh;
+padding:20px;
+}
+
+.loginBox{
+width:100%;
+max-width:400px;
+background:#111;
+padding:30px;
+border-radius:20px;
+border:1px solid #222;
+}
+
+.logo{
+width:80px;
+height:80px;
+margin:auto;
+margin-bottom:20px;
+background:#00ff88;
+border-radius:50%;
+display:flex;
+justify-content:center;
+align-items:center;
+font-size:35px;
+color:#000;
+}
+
+h2{
+text-align:center;
+color:#fff;
+margin-bottom:8px;
+}
+
+p{
+text-align:center;
+color:#888;
+margin-bottom:25px;
+font-size:14px;
+}
+
+.inputBox{
+position:relative;
+margin-bottom:18px;
+}
+
+.inputBox input{
+width:100%;
+padding:15px;
+padding-right:50px;
+background:#1b1b1b;
+border:1px solid #333;
+border-radius:12px;
+color:#fff;
+outline:none;
+}
+
+.inputBox i{
+position:absolute;
+right:18px;
+top:50%;
+transform:translateY(-50%);
+color:#888;
+cursor:pointer;
+}
+
+button{
+width:100%;
+padding:15px;
+background:#00ff88;
+color:#000;
+border:none;
+border-radius:12px;
+font-size:16px;
+font-weight:700;
+cursor:pointer;
+}
+
+#loader{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+display:none;
+justify-content:center;
+align-items:center;
+background:rgba(0,0,0,.9);
+}
+
+.spinner{
+width:60px;
+height:60px;
+border:5px solid #222;
+border-top:5px solid #00ff88;
+border-radius:50%;
+animation:spin .8s linear infinite;
+}
+
+@keyframes spin{
+
+100%{
+
+transform:rotate(360deg);
+
+}
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="loginBox">
+
+<div class="logo">
+
+<i class="fa-solid fa-user-shield"></i>
+
+</div>
+
+<h2>Admin Login</h2>
+
+<p>Only administrators can sign in.</p>
+
+<div class="inputBox">
+
+<input
+type="email"
+id="email"
+placeholder="Admin Email">
+
+</div>
+
+<div class="inputBox">
+
+<input
+type="password"
+id="password"
+placeholder="Password">
+
+<i
+class="fa-solid fa-eye"
+id="togglePassword">
+
+</i>
+
+</div>
+
+<button id="loginBtn">
+
+Login
+
+</button>
+
+</div>
+
+<div id="loader">
+
+<div class="spinner"></div>
+
+</div>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
+
+import {
+getAuth,
+signInWithEmailAndPassword
+} from "https://www.gstatic.com/firebasejs/12.15.0/firebase-auth.js";
+
+const firebaseConfig={
+
+apiKey:"AIzaSyChi8M-iJaXsqOOFrwqD25aJJQoCMdaVVU",
+
+authDomain:"earnix-c7507.firebaseapp.com",
+
+projectId:"earnix-c7507",
+
+storageBucket:"earnix-c7507.firebasestorage.app",
+
+messagingSenderId:"930659607352",
+
+appId:"1:930659607352:web:4d1c3bce0cfd39d4e417cd"
+
+};
+
+const app=initializeApp(firebaseConfig);
+
+const auth=getAuth(app);
+
+const email=document.getElementById("email");
+
+const password=document.getElementById("password");
+
+const loginBtn=document.getElementById("loginBtn");
+
+const loader=document.getElementById("loader");
+
+const togglePassword=document.getElementById("togglePassword");
+
+/* Show / Hide Password */
+
+togglePassword.addEventListener("click",()=>{
+
+if(password.type==="password"){
+
+password.type="text";
+
+togglePassword.classList.remove("fa-eye");
+
+togglePassword.classList.add("fa-eye-slash");
+
+}else{
+
+password.type="password";
+
+togglePassword.classList.remove("fa-eye-slash");
+
+togglePassword.classList.add("fa-eye");
+
+}
+
+});
+
+/* Login */
+
+loginBtn.addEventListener("click",async()=>{
+
+const adminEmail=email.value.trim();
+
+const adminPassword=password.value.trim();
+
+if(adminEmail===""||adminPassword===""){
+
+alert("Please enter your email and password.");
+
+return;
+
+}
+
+loader.style.display="flex";
+
+try{
+
+await signInWithEmailAndPassword(
+
+auth,
+
+adminEmail,
+
+adminPassword
+
+);
+
+window.location.href="admin.html";
+
+}catch(error){
+
+loader.style.display="none";
+
+if(error.code==="auth/invalid-credential"){
+
+alert("Incorrect email or password.");
+
+}else if(error.code==="auth/user-not-found"){
+
+alert("Admin account does not exist.");
+
+}else if(error.code==="auth/wrong-password"){
+
+alert("Incorrect password.");
+
+}else{
+
+alert(error.message);
+
+}
+
+}
+
+});
+
+</script>
+
+</body>
+
+</html>

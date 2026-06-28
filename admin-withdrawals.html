@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+<title>Earnix</title>
+
+<title>Admin Withdrawals | Earnix</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Poppins,sans-serif;
+}
+
+body{
+background:#050505;
+color:#fff;
+padding:20px;
+padding-bottom:110px;
+}
+
+header{
+display:flex;
+align-items:center;
+gap:15px;
+margin-bottom:25px;
+}
+
+.backBtn{
+width:45px;
+height:45px;
+background:#111;
+border-radius:50%;
+display:flex;
+justify-content:center;
+align-items:center;
+text-decoration:none;
+color:#00ff88;
+border:1px solid #222;
+font-size:18px;
+}
+
+header h2{
+font-size:24px;
+font-weight:700;
+}
+
+.withdrawCard{
+background:#111;
+border:1px solid #222;
+border-radius:18px;
+padding:18px;
+margin-bottom:18px;
+}
+
+.withdrawCard h3{
+color:#00ff88;
+margin-bottom:12px;
+}
+
+.row{
+display:flex;
+justify-content:space-between;
+margin:8px 0;
+gap:15px;
+}
+
+.label{
+color:#999;
+}
+
+.value{
+font-weight:600;
+text-align:right;
+word-break:break-word;
+}
+
+.status{
+display:inline-block;
+padding:6px 12px;
+border-radius:30px;
+font-size:12px;
+font-weight:600;
+margin-top:12px;
+}
+
+.pending{
+background:#ffc107;
+color:#000;
+}
+
+.approved{
+background:#00ff88;
+color:#000;
+}
+
+.rejected{
+background:#ff3b30;
+color:#fff;
+}
+
+.actions{
+display:flex;
+gap:12px;
+margin-top:18px;
+}
+
+.approveBtn,
+.rejectBtn{
+flex:1;
+padding:13px;
+border:none;
+border-radius:12px;
+font-weight:700;
+cursor:pointer;
+}
+
+.approveBtn{
+background:#00ff88;
+color:#000;
+}
+
+.rejectBtn{
+background:#ff3b30;
+color:#fff;
+}
+
+#withdrawContainer{
+margin-top:20px;
+}
+
+#emptyState{
+display:none;
+text-align:center;
+padding:60px 20px;
+color:#888;
+}
+
+#emptyState i{
+font-size:70px;
+margin-bottom:20px;
+color:#333;
+}
+
+.bottomNav{
+position:fixed;
+left:0;
+bottom:0;
+width:100%;
+height:70px;
+background:#111;
+border-top:1px solid #222;
+display:flex;
+justify-content:space-around;
+align-items:center;
+}
+
+.bottomNav a{
+flex:1;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+text-decoration:none;
+color:#888;
+font-size:12px;
+}
+
+.bottomNav a.active{
+color:#00ff88;
+}
+
+.bottomNav i{
+font-size:20px;
+margin-bottom:4px;
+}
+
+#loader{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+display:none;
+justify-content:center;
+align-items:center;
+background:rgba(0,0,0,.9);
+z-index:9999;
+}
+
+.loaderBox{
+background:#111;
+padding:30px;
+border-radius:18px;
+text-align:center;
+width:270px;
+}
+
+.spinner{
+width:60px;
+height:60px;
+margin:auto;
+border-radius:50%;
+border:5px solid #222;
+border-top:5px solid #00ff88;
+animation:spin .8s linear infinite;
+margin-bottom:20px;
+}
+
+@keyframes spin{
+100%{
+transform:rotate(360deg);
+}
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+<a href="admin.html" class="backBtn">
+
+<i class="fa-solid fa-arrow-left"></i>
+
+</a>
+
+<h2>
+
+Withdrawals
+
+</h2>
+
+</header>
+
+<div id="withdrawContainer">
+
+</div>
+
+<div id="emptyState">
+
+<i class="fa-solid fa-wallet"></i>
+
+<h3>
+
+No Withdrawal Requests
+
+</h3>
+
+</div>
+
+<div id="loader">
+
+<div class="loaderBox">
+
+<div class="spinner"></div>
+
+<h3>
+
+Loading...
+
+</h3>
+
+</div>
+
+</div>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
+
+import {
+getFirestore,
+collection,
+getDocs,
+query,
+where
+} from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
+
+const firebaseConfig={
+
+apiKey:"AIzaSyChi8M-iJaXsqOOFrwqD25aJJQoCMdaVVU",
+
+authDomain:"earnix-c7507.firebaseapp.com",
+
+projectId:"earnix-c7507",
+
+storageBucket:"earnix-c7507.firebasestorage.app",
+
+messagingSenderId:"930659607352",
+
+appId:"1:930659607352:web:4d1c3bce0cfd39d4e417cd"
+
+};
+
+const app=initializeApp(firebaseConfig);
+
+const db=getFirestore(app);
+
+const loader=document.getElementById("loader");
+
+const withdrawContainer=document.getElementById("withdrawContainer");
+
+const emptyState=document.getElementById("emptyState");
+
+loader.style.display="flex";
+
+try{
+
+const snapshot=await getDocs(
+
+query(
+collection(db,"withdrawals"),
+where("status","==","pending")
+)
+
+);
+
+let requests=[];
+
+snapshot.forEach(doc=>{
+
+requests.push({
+
+id:doc.id,
+
+...doc.data()
+
+});
+
+});
+
+/* Latest First */
+
+requests.sort((a,b)=>{
+
+const aTime=a.createdAt?.seconds||0;
+
+const bTime=b.createdAt?.seconds||0;
+
+return bTime-aTime;
+
+});
+
+if(requests.length===0){
+
+loader.style.display="none";
+
+emptyState.style.display="block";
+
+}else{
+
+emptyState.style.display="none";
+
+withdrawContainer.innerHTML="";
+
+requests.forEach(item=>{
+
+let statusClass="pending";
+
+if(item.status==="approved") statusClass="approved";
+
+if(item.status==="rejected") statusClass="rejected";
+
+const date=item.createdAt?
+
+new Date(item.createdAt.seconds*1000).toLocaleString()
+
+:"-";
+
+withdrawContainer.innerHTML+=`
+
+<div class="withdrawCard">
+
+<h3>${item.fullname}</h3>
+
+<div class="row">
+
+<div class="label">Username</div>
+
+<div class="value">${item.username}</div>
+
+</div>
+
+<div class="row">
+
+<div class="label">Email</div>
+
+<div class="value">${item.email}</div>
+
+</div>
+
+<div class="row">
+
+<div class="label">Bank</div>
+
+<div class="value">${item.bankName}</div>
+
+</div>
+
+<div class="row">
+
+<div class="label">Account Name</div>
+
+<div class="value">${item.accountHolderName}</div>
+
+</div>
+
+<div class="row">
+
+<div class="label">Account No.</div>
+
+<div class="value">${item.accountNumber}</div>
+
+</div>
+
+<div class="row">
+
+<div class="label">Amount</div>
+
+<div class="value">
+
+₦${Number(item.amount).toLocaleString()}
+
+</div>
+
+</div>
+
+<div class="row">
+
+<div class="label">Date</div>
+
+<div class="value">${date}</div>
+
+</div>
+
+<div class="status ${statusClass}">
+
+${item.status.charAt(0).toUpperCase()+item.status.slice(1)}
+
+</div>
+
+<div class="actions">
+
+<button
+class="approveBtn"
+data-id="${item.id}"
+data-uid="${item.uid}"
+data-amount="${item.amount}">
+
+Approve
+
+</button>
+
+<button
+class="rejectBtn"
+data-id="${item.id}">
+
+Reject
+
+</button>
+
+</div>
+
+</div>
+
+`;
+
+});
+
+loader.style.display="none";
+
+}
+
+/* Continue in Part 3 */
+
+}catch(error){
+
+loader.style.display="none";
+
+alert(error.message);
+
+}
+
+const {
+doc,
+getDoc,
+updateDoc
+}=await import("https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js");
+
+/* APPROVE */
+
+document.addEventListener("click",async(e)=>{
+
+if(e.target.classList.contains("approveBtn")){
+
+const id=e.target.dataset.id;
+
+const uid=e.target.dataset.uid;
+
+const amount=Number(e.target.dataset.amount);
+
+loader.style.display="flex";
+
+try{
+
+const userRef=doc(db,"users",uid);
+
+const userSnap=await getDoc(userRef);
+
+if(!userSnap.exists()){
+
+loader.style.display="none";
+
+alert("User not found.");
+
+return;
+
+}
+
+const userData=userSnap.data();
+
+if((userData.balance||0)<amount){
+
+loader.style.display="none";
+
+alert("User has insufficient balance.");
+
+return;
+
+}
+
+/* Deduct Balance */
+
+await updateDoc(userRef,{
+
+balance:(userData.balance||0)-amount
+
+});
+
+/* Update Withdrawal */
+
+await updateDoc(
+
+doc(db,"withdrawals",id),
+
+{
+
+status:"approved"
+
+}
+
+);
+
+loader.style.display="none";
+
+alert("Withdrawal Approved.");
+
+location.reload();
+
+}catch(error){
+
+loader.style.display="none";
+
+alert(error.message);
+
+}
+
+}
+
+/* REJECT */
+
+if(e.target.classList.contains("rejectBtn")){
+
+const id=e.target.dataset.id;
+
+loader.style.display="flex";
+
+try{
+
+await updateDoc(
+
+doc(db,"withdrawals",id),
+
+{
+
+status:"rejected"
+
+}
+
+);
+
+loader.style.display="none";
+
+alert("Withdrawal Rejected.");
+
+location.reload();
+
+}catch(error){
+
+loader.style.display="none";
+
+alert(error.message);
+
+}
+
+}
+
+});
+
+</script>
+
+</body>
+
+</html>

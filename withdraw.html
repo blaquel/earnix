@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+<title>Withdraw | Earnix</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+background:#050505;
+color:#fff;
+padding:20px;
+padding-bottom:120px;
+}
+
+header{
+display:flex;
+align-items:center;
+gap:15px;
+margin-bottom:25px;
+}
+
+.backBtn{
+width:45px;
+height:45px;
+border-radius:50%;
+background:#111;
+border:1px solid #222;
+display:flex;
+justify-content:center;
+align-items:center;
+text-decoration:none;
+color:#00ff88;
+font-size:18px;
+}
+
+header h2{
+font-size:24px;
+font-weight:700;
+}
+
+.card{
+background:#111;
+border:1px solid #222;
+border-radius:20px;
+padding:22px;
+margin-bottom:20px;
+}
+
+.card h3{
+color:#00ff88;
+margin-bottom:18px;
+}
+
+label{
+display:block;
+margin-bottom:8px;
+font-size:14px;
+color:#bbb;
+}
+
+input{
+width:100%;
+padding:15px;
+margin-bottom:18px;
+background:#1b1b1b;
+border:1px solid #333;
+border-radius:12px;
+color:#fff;
+font-size:15px;
+outline:none;
+}
+
+input:focus{
+border-color:#00ff88;
+}
+
+.submitBtn{
+width:100%;
+padding:16px;
+border:none;
+border-radius:14px;
+background:#00ff88;
+color:#000;
+font-size:16px;
+font-weight:700;
+cursor:pointer;
+}
+
+.note{
+margin-top:18px;
+color:#999;
+font-size:13px;
+line-height:1.7;
+}
+
+.supportFloat{
+position:fixed;
+bottom:90px;
+right:20px;
+width:58px;
+height:58px;
+background:#00ff88;
+border-radius:50%;
+display:flex;
+justify-content:center;
+align-items:center;
+text-decoration:none;
+color:#000;
+font-size:24px;
+box-shadow:0 0 18px rgba(0,255,136,.4);
+z-index:998;
+}
+
+.bottomNav{
+position:fixed;
+bottom:0;
+left:0;
+width:100%;
+height:70px;
+background:#111;
+border-top:1px solid #222;
+display:flex;
+}
+
+.bottomNav a{
+flex:1;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+text-decoration:none;
+color:#888;
+font-size:12px;
+}
+
+.bottomNav a.active{
+color:#00ff88;
+}
+
+.bottomNav i{
+font-size:20px;
+margin-bottom:4px;
+}
+
+#loader{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+display:none;
+justify-content:center;
+align-items:center;
+background:rgba(0,0,0,.92);
+z-index:9999;
+}
+
+.loaderBox{
+width:280px;
+background:#111;
+padding:30px;
+border-radius:20px;
+text-align:center;
+}
+
+.spinner{
+width:60px;
+height:60px;
+margin:auto;
+border-radius:50%;
+border:5px solid #222;
+border-top:5px solid #00ff88;
+animation:spin .8s linear infinite;
+margin-bottom:20px;
+}
+
+@keyframes spin{
+100%{
+transform:rotate(360deg);
+}
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+<a href="wallet.html" class="backBtn">
+
+<i class="fa-solid fa-arrow-left"></i>
+
+</a>
+
+<h2>Withdraw</h2>
+
+</header>
+
+<div class="card">
+
+<h3>Withdrawal Details</h3>
+
+<label>Bank Name</label>
+
+<input
+type="text"
+id="bankName"
+placeholder="Enter bank name">
+
+<label>Account Holder Name</label>
+
+<input
+type="text"
+id="accountHolder"
+placeholder="Enter account holder name">
+
+<label>Account Number</label>
+
+<input
+type="text"
+id="accountNumber"
+placeholder="Enter account number">
+
+<label>Amount (₦)</label>
+
+<input
+type="number"
+id="amount"
+placeholder="Enter amount">
+
+<button
+class="submitBtn"
+id="submitBtn">
+
+Submit Withdrawal
+
+</button>
+
+<p class="note">
+
+• Minimum withdrawal is ₦500.<br><br>
+
+• Make sure your bank details are correct.<br><br>
+
+• Withdrawals are reviewed by the admin before payment.
+
+</p>
+
+</div>
+
+<a href="support.html" class="supportFloat">
+
+<i class="fa-solid fa-headset"></i>
+
+</a>
+
+<nav class="bottomNav">
+
+<a href="dashboard.html">
+
+<i class="fa-solid fa-house"></i>
+
+<span>Home</span>
+
+</a>
+
+<a href="wallet.html" class="active">
+
+<i class="fa-solid fa-wallet"></i>
+
+<span>Wallet</span>
+
+</a>
+
+<a href="history.html">
+
+<i class="fa-solid fa-clock-rotate-left"></i>
+
+<span>History</span>
+
+</a>
+
+<a href="profile.html">
+
+<i class="fa-solid fa-user"></i>
+
+<span>Profile</span>
+
+</a>
+
+</nav>
+
+<div id="loader">
+
+<div class="loaderBox">
+
+<div class="spinner"></div>
+
+<h3>Submitting...</h3>
+
+<p>Please wait...</p>
+
+</div>
+
+</div>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
+
+import {
+getAuth,
+onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/12.15.0/firebase-auth.js";
+
+import {
+getFirestore,
+doc,
+getDoc,
+collection,
+addDoc,
+serverTimestamp
+} from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
+
+const firebaseConfig={
+
+apiKey:"AIzaSyChi8M-iJaXsqOOFrwqD25aJJQoCMdaVVU",
+
+authDomain:"earnix-c7507.firebaseapp.com",
+
+projectId:"earnix-c7507",
+
+storageBucket:"earnix-c7507.firebasestorage.app",
+
+messagingSenderId:"930659607352",
+
+appId:"1:930659607352:web:4d1c3bce0cfd39d4e417cd"
+
+};
+
+const app=initializeApp(firebaseConfig);
+
+const auth=getAuth(app);
+
+const db=getFirestore(app);
+
+const loader=document.getElementById("loader");
+
+const submitBtn=document.getElementById("submitBtn");
+
+let currentUser=null;
+
+loader.style.display="flex";
+
+onAuthStateChanged(auth,async(user)=>{
+
+if(!user){
+
+window.location.replace("login.html");
+
+return;
+
+}
+
+currentUser=user;
+
+try{
+
+const userRef=doc(db,"users",user.uid);
+
+const userSnap=await getDoc(userRef);
+
+if(!userSnap.exists()){
+
+loader.style.display="none";
+
+alert("User not found.");
+
+return;
+
+}
+
+const data=userSnap.data();
+
+/* Auto-fill bank details */
+
+document.getElementById("bankName").value=data.bankName||"";
+
+document.getElementById("accountHolder").value=data.accountName||"";
+
+document.getElementById("accountNumber").value=data.accountNumber||"";
+
+loader.style.display="none";
+
+}catch(error){
+
+loader.style.display="none";
+
+alert(error.message);
+
+}
+
+});
+
+submitBtn.addEventListener("click",async()=>{
+
+const bankName=document.getElementById("bankName").value.trim();
+
+const accountHolder=document.getElementById("accountHolder").value.trim();
+
+const accountNumber=document.getElementById("accountNumber").value.trim();
+
+const amount=Number(document.getElementById("amount").value);
+
+if(bankName===""){
+
+alert("Please enter your bank name.");
+
+return;
+
+}
+
+if(accountHolder===""){
+
+alert("Please enter the account holder name.");
+
+return;
+
+}
+
+if(accountNumber===""){
+
+alert("Please enter your account number.");
+
+return;
+
+}
+
+if(!amount||amount<500){
+
+alert("Minimum withdrawal is ₦500.");
+
+return;
+
+}
+
+loader.style.display="flex";
+
+submitBtn.disabled=true;
+
+try{
+
+const userRef=doc(db,"users",currentUser.uid);
+
+const userSnap=await getDoc(userRef);
+
+const userData=userSnap.data();
+
+if((userData.balance||0)<amount){
+
+loader.style.display="none";
+
+submitBtn.disabled=false;
+
+alert("Insufficient wallet balance.");
+
+return;
+
+}
+
+await addDoc(
+
+collection(db,"withdrawals"),
+
+{
+
+uid:currentUser.uid,
+
+fullname:userData.fullname,
+
+username:userData.username,
+
+email:userData.email,
+
+bankName:bankName,
+
+accountHolderName:accountHolder,
+
+accountNumber:accountNumber,
+
+amount:amount,
+
+status:"pending",
+
+createdAt:serverTimestamp()
+
+}
+
+);
+
+loader.style.display="none";
+
+alert("✅ Withdrawal request submitted successfully.");
+
+window.location.href="wallet.html";
+
+}catch(error){
+
+loader.style.display="none";
+
+submitBtn.disabled=false;
+
+alert(error.message);
+
+}
+
+});
+
+</script>
+
+</body>
+
+</html>

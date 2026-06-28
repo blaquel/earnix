@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+<title>Earnix</title>
+
+<title>Earnix Dashboard</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+
+background:#050505;
+
+color:#fff;
+
+padding-bottom:100px;
+
+}
+
+header{
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+padding:20px;
+
+}
+
+.user-info h2{
+
+font-size:26px;
+
+font-weight:700;
+
+}
+
+.user-info p{
+
+color:#8d8d8d;
+
+font-size:14px;
+
+margin-top:3px;
+
+}
+
+.logout{
+
+width:45px;
+
+height:45px;
+
+border-radius:50%;
+
+background:#111;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+font-size:20px;
+
+color:#00ff88;
+
+cursor:pointer;
+
+transition:.3s;
+
+}
+
+.logout:hover{
+
+background:#1a1a1a;
+
+}
+
+.balance-card{
+
+margin:20px;
+
+background:linear-gradient(135deg,#111,#191919);
+
+border:1px solid rgba(0,255,136,.2);
+
+border-radius:25px;
+
+padding:25px;
+
+}
+
+.balance-top{
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+}
+
+.balance-top span{
+
+color:#9d9d9d;
+
+font-size:15px;
+
+}
+
+.balance-top i{
+
+font-size:24px;
+
+color:#00ff88;
+
+}
+
+.balance{
+
+font-size:42px;
+
+font-weight:700;
+
+margin:20px 0;
+
+color:#00ff88;
+
+}
+
+.actions{
+
+display:flex;
+
+gap:15px;
+
+}
+
+.actions button{
+
+flex:1;
+
+padding:15px;
+
+border:none;
+
+border-radius:14px;
+
+font-size:15px;
+
+font-weight:600;
+
+cursor:pointer;
+
+transition:.3s;
+
+}
+
+#activateBtn{
+
+background:#00ff88;
+
+color:#000;
+
+}
+
+#withdrawBtn{
+
+background:#222;
+
+color:#fff;
+
+}
+
+#activateBtn:hover{
+
+transform:translateY(-2px);
+
+box-shadow:0 0 15px #00ff88;
+
+}
+
+#withdrawBtn:hover{
+
+background:#2b2b2b;
+
+}
+
+.stats{
+
+display:grid;
+
+grid-template-columns:repeat(2,1fr);
+
+gap:15px;
+
+padding:0 20px;
+
+}
+
+.card{
+
+background:#111;
+
+border-radius:18px;
+
+padding:20px;
+
+border:1px solid #222;
+
+}
+
+.card p{
+
+color:#8d8d8d;
+
+font-size:13px;
+
+margin-bottom:10px;
+
+}
+
+.card h2{
+
+font-size:30px;
+
+color:#00ff88;
+
+}
+
+.supportFloat{
+position:fixed;
+bottom:90px;
+right:20px;
+width:58px;
+height:58px;
+background:#00ff88;
+color:#000;
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:24px;
+text-decoration:none;
+box-shadow:0 0 18px rgba(0,255,136,.45);
+z-index:999;
+animation:floatSupport 2s ease-in-out infinite;
+transition:.3s;
+}
+
+.supportFloat:hover{
+transform:scale(1.08);
+}
+
+@keyframes floatSupport{
+0%,100%{
+transform:translateY(0);
+}
+50%{
+transform:translateY(-8px);
+}
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+<div class="user-info">
+
+<h2 id="welcomeName">
+
+Welcome
+
+</h2>
+
+<p>
+
+Earn money through referrals.
+
+</p>
+
+</div>
+
+<div class="logout" id="logoutBtn">
+
+<i class="fa-solid fa-right-from-bracket"></i>
+
+</div>
+
+</header>
+
+<div class="balance-card">
+
+<div class="balance-top">
+
+<span>
+
+Available Balance
+
+</span>
+
+<i class="fa-solid fa-wallet"></i>
+
+</div>
+
+<div class="balance" id="balance">
+
+₦0.00
+
+</div>
+
+<div class="actions">
+
+<button id="activateBtn">
+
+Activate
+
+</button>
+
+<button id="withdrawBtn">
+
+Withdraw
+
+</button>
+
+</div>
+
+</div>
+
+<div class="stats">
+
+<div class="card">
+
+<p>
+
+Total Referrals
+
+</p>
+
+<h2 id="totalReferrals">
+
+0
+
+</h2>
+
+</div>
+
+<div class="card">
+
+<p>
+
+Referral Bonus
+
+</p>
+
+<h2 id="referralBonus">
+
+₦0
+
+</h2>
+
+</div>
+
+</div>
+
+<!-- Referral Section -->
+
+<div class="card referral-card">
+
+<p>Your Referral Link</p>
+
+<div class="referral-box">
+
+<input
+type="text"
+id="referralLink"
+value="Loading..."
+readonly>
+
+<button id="copyBtn">
+
+<i class="fa-solid fa-copy"></i>
+
+</button>
+
+</div>
+
+</div>
+
+<!-- Account Status -->
+
+<div class="card status-card">
+
+<p>Account Status</p>
+
+<div id="statusText" class="status pending">
+
+Pending Activation
+
+</div>
+
+</div>
+
+<style>
+
+.referral-card{
+
+margin:20px;
+
+}
+
+.referral-box{
+
+display:flex;
+
+gap:10px;
+
+margin-top:15px;
+
+}
+
+.referral-box input{
+
+flex:1;
+
+background:#1b1b1b;
+
+border:none;
+
+outline:none;
+
+padding:14px;
+
+border-radius:12px;
+
+color:#fff;
+
+font-size:13px;
+
+}
+
+#copyBtn{
+
+width:55px;
+
+border:none;
+
+background:#00ff88;
+
+color:#000;
+
+border-radius:12px;
+
+font-size:18px;
+
+cursor:pointer;
+
+transition:.3s;
+
+}
+
+#copyBtn:hover{
+
+transform:scale(1.05);
+
+}
+
+.status{
+
+margin-top:12px;
+
+padding:12px;
+
+border-radius:12px;
+
+font-weight:600;
+
+text-align:center;
+
+}
+
+.pending{
+
+background:#3b2c00;
+
+color:#ffcc00;
+
+}
+
+.active{
+
+background:#0d4f2a;
+
+color:#00ff88;
+
+}
+
+/* Bottom Navigation */
+
+.bottom-nav{
+
+position:fixed;
+
+bottom:0;
+
+left:0;
+
+width:100%;
+
+height:75px;
+
+background:#111;
+
+border-top:1px solid #222;
+
+display:flex;
+
+justify-content:space-around;
+
+align-items:center;
+
+}
+
+.bottom-nav a{
+
+display:flex;
+
+flex-direction:column;
+
+align-items:center;
+
+text-decoration:none;
+
+color:#888;
+
+font-size:12px;
+
+gap:5px;
+
+transition:.3s;
+
+}
+
+.bottom-nav a i{
+
+font-size:22px;
+
+}
+
+.bottom-nav a.active{
+
+color:#00ff88;
+
+}
+
+/* Loading Overlay */
+
+#loader{
+
+position:fixed;
+
+top:0;
+
+left:0;
+
+width:100%;
+
+height:100%;
+
+display:none;
+
+justify-content:center;
+
+align-items:center;
+
+background:rgba(0,0,0,.92);
+
+backdrop-filter:blur(5px);
+
+z-index:999;
+
+}
+
+.loader{
+
+width:60px;
+
+height:60px;
+
+border:5px solid #222;
+
+border-top:5px solid #00ff88;
+
+border-radius:50%;
+
+animation:spin .8s linear infinite;
+
+}
+
+@keyframes spin{
+
+100%{
+
+transform:rotate(360deg);
+
+}
+
+}
+
+</style>
+
+<nav class="bottom-nav">
+
+<a href="dashboard.html" class="active">
+
+<i class="fa-solid fa-house"></i>
+
+<span>Home</span>
+
+</a>
+
+<a href="history.html">
+
+<i class="fa-solid fa-clock-rotate-left"></i>
+
+<span>History</span>
+
+</a>
+
+<a href="wallet.html">
+
+<i class="fa-solid fa-wallet"></i>
+
+<span>Wallet</span>
+
+</a>
+
+<a href="profile.html">
+
+<i class="fa-solid fa-user"></i>
+
+<span>Profile</span>
+
+</a>
+
+</nav>
+
+<div id="loader">
+
+<div class="loader"></div>
+
+</div>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
+
+import {
+getAuth,
+onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/12.15.0/firebase-auth.js";
+
+import {
+getFirestore,
+doc,
+getDoc
+} from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
+
+const firebaseConfig={
+apiKey:"AIzaSyChi8M-iJaXsqOOFrwqD25aJJQoCMdaVVU",
+authDomain:"earnix-c7507.firebaseapp.com",
+projectId:"earnix-c7507",
+storageBucket:"earnix-c7507.firebasestorage.app",
+messagingSenderId:"930659607352",
+appId:"1:930659607352:web:4d1c3bce0cfd39d4e417cd"
+};
+
+const app=initializeApp(firebaseConfig);
+
+const auth=getAuth(app);
+
+const db=getFirestore(app);
+
+const loader=document.getElementById("loader");
+
+loader.style.display="flex";
+
+onAuthStateChanged(auth,async(user)=>{
+
+if(!user){
+
+window.location.replace("login.html");
+
+return;
+
+}
+
+try{
+
+const userRef=doc(db,"users",user.uid);
+
+const userSnap=await getDoc(userRef);
+
+if(!userSnap.exists()){
+
+loader.style.display="none";
+
+alert("User record not found.");
+
+return;
+
+}
+
+const data=userSnap.data();
+
+/* Save user globally */
+
+window.currentUser=user;
+
+window.currentUserData=data;
+
+/* Welcome */
+
+document.getElementById("welcomeName").innerHTML=
+"Welcome, "+data.fullname;
+
+/* Balance */
+
+document.getElementById("balance").innerHTML=
+"₦"+Number(data.balance||0).toLocaleString();
+
+/* Referrals */
+
+document.getElementById("totalReferrals").innerHTML=
+data.totalReferrals||0;
+
+/* Bonus */
+
+document.getElementById("referralBonus").innerHTML=
+"₦"+Number(data.referralBonus||0).toLocaleString();
+
+/* Referral Link */
+
+/* Referral Link */
+
+const referralLink =
+window.location.origin +
+"/register.html?ref=" +
+data.username;
+
+document.getElementById("referralLink").value =
+referralLink;
+
+/* Activation Status */
+
+const activateBtn=document.getElementById("activateBtn");
+
+const status=document.getElementById("statusText");
+
+if(data.activated){
+
+activateBtn.innerHTML="Activated ✅";
+
+activateBtn.disabled=true;
+
+activateBtn.style.background="#156d2d";
+
+activateBtn.style.color="#fff";
+
+status.classList.remove("pending");
+
+status.classList.add("active");
+
+status.innerHTML="Activated";
+
+}else{
+
+activateBtn.innerHTML="Activate";
+
+status.innerHTML="Pending Activation";
+
+}
+
+loader.style.display="none";
+
+}catch(error){
+
+loader.style.display="none";
+
+alert(error.message);
+
+}
+
+});
+
+/* Logout */
+
+import { signOut } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-auth.js";
+
+document.getElementById("logoutBtn").addEventListener("click",async()=>{
+
+loader.style.display="flex";
+
+try{
+
+await signOut(auth);
+
+window.location.replace("login.html");
+
+}catch(error){
+
+loader.style.display="none";
+
+alert(error.message);
+
+}
+
+});
+
+
+/* Copy Referral Link */
+
+document.getElementById("copyBtn").addEventListener("click",async()=>{
+
+try{
+
+const link=document.getElementById("referralLink").value;
+
+await navigator.clipboard.writeText(link);
+
+const btn=document.getElementById("copyBtn");
+
+const old=btn.innerHTML;
+
+btn.innerHTML="Copied";
+
+setTimeout(()=>{
+
+btn.innerHTML=old;
+
+},2000);
+
+}catch{
+
+alert("Unable to copy link.");
+
+}
+
+});
+
+
+/* Activate Button */
+
+document.getElementById("activateBtn").addEventListener("click",()=>{
+
+if(!window.currentUserData) return;
+
+if(window.currentUserData.activated){
+
+return;
+
+}
+
+window.location.href="activate.html";
+
+});
+
+
+/* Withdraw Button */
+
+document.getElementById("withdrawBtn").addEventListener("click",()=>{
+
+window.location.href="withdraw.html";
+
+});
+
+</script>
+
+<a href="support.html" class="supportFloat">
+    <i class="fa-solid fa-headset"></i>
+</a>
+
+</body>
+
+</html>

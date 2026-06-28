@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+<title>Earnix</title>
+
+<title>Admin Settings | Earnix</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Poppins,sans-serif;
+}
+
+body{
+background:#050505;
+color:#fff;
+padding:20px;
+padding-bottom:100px;
+}
+
+header{
+display:flex;
+align-items:center;
+gap:15px;
+margin-bottom:25px;
+}
+
+.backBtn{
+width:45px;
+height:45px;
+border-radius:50%;
+background:#111;
+border:1px solid #222;
+display:flex;
+justify-content:center;
+align-items:center;
+text-decoration:none;
+color:#00ff88;
+font-size:18px;
+}
+
+header h2{
+font-size:24px;
+}
+
+.card{
+background:#111;
+border:1px solid #222;
+border-radius:18px;
+padding:20px;
+margin-bottom:20px;
+}
+
+.card h3{
+color:#00ff88;
+margin-bottom:18px;
+}
+
+label{
+display:block;
+margin-bottom:8px;
+font-size:14px;
+color:#aaa;
+}
+
+input{
+width:100%;
+padding:15px;
+margin-bottom:18px;
+background:#1b1b1b;
+border:1px solid #333;
+border-radius:12px;
+color:#fff;
+outline:none;
+}
+
+input:focus{
+border-color:#00ff88;
+}
+
+.saveBtn{
+width:100%;
+padding:16px;
+border:none;
+border-radius:14px;
+background:#00ff88;
+color:#000;
+font-size:16px;
+font-weight:700;
+cursor:pointer;
+}
+
+#loader{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+display:none;
+justify-content:center;
+align-items:center;
+background:rgba(0,0,0,.9);
+z-index:9999;
+}
+
+.loaderBox{
+background:#111;
+padding:30px;
+border-radius:18px;
+text-align:center;
+width:270px;
+}
+
+.spinner{
+width:60px;
+height:60px;
+margin:auto;
+border:5px solid #222;
+border-top:5px solid #00ff88;
+border-radius:50%;
+animation:spin .8s linear infinite;
+margin-bottom:20px;
+}
+
+@keyframes spin{
+100%{transform:rotate(360deg);}
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+<a href="admin.html" class="backBtn">
+
+<i class="fa-solid fa-arrow-left"></i>
+
+</a>
+
+<h2>Settings</h2>
+
+</header>
+
+<div class="card">
+
+<h3>Support Links</h3>
+
+<label>WhatsApp Channel</label>
+
+<input type="text" id="channelLink">
+
+<label>Admin Chat Link</label>
+
+<input type="text" id="adminChatLink">
+
+</div>
+
+<div class="card">
+
+<h3>Deposit Account</h3>
+
+<label>Bank Name</label>
+
+<input type="text" id="bankName">
+
+<label>Account Number</label>
+
+<input type="text" id="accountNumber">
+
+<label>Account Holder Name</label>
+
+<input type="text" id="accountHolderName">
+
+<label>Payment Description</label>
+
+<input type="text" id="paymentDescription">
+
+</div>
+
+<button class="saveBtn" id="saveBtn">
+
+Save Settings
+
+</button>
+
+<div id="loader">
+
+<div class="loaderBox">
+
+<div class="spinner"></div>
+
+<h3>Saving...</h3>
+
+</div>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
+
+import {
+getFirestore,
+doc,
+getDoc,
+setDoc
+} from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
+
+const firebaseConfig={
+
+apiKey:"AIzaSyChi8M-iJaXsqOOFrwqD25aJJQoCMdaVVU",
+
+authDomain:"earnix-c7507.firebaseapp.com",
+
+projectId:"earnix-c7507",
+
+storageBucket:"earnix-c7507.firebasestorage.app",
+
+messagingSenderId:"930659607352",
+
+appId:"1:930659607352:web:4d1c3bce0cfd39d4e417cd"
+
+};
+
+const app=initializeApp(firebaseConfig);
+
+const db=getFirestore(app);
+
+const loader=document.getElementById("loader");
+
+const saveBtn=document.getElementById("saveBtn");
+
+loader.style.display="flex";
+
+const settingsRef=doc(db,"settings","general");
+
+try{
+
+const settingsSnap=await getDoc(settingsRef);
+
+if(settingsSnap.exists()){
+
+const data=settingsSnap.data();
+
+document.getElementById("channelLink").value=data.channelLink||"";
+
+document.getElementById("adminChatLink").value=data.adminChatLink||"";
+
+document.getElementById("bankName").value=data.bankName||"";
+
+document.getElementById("accountNumber").value=data.accountNumber||"";
+
+document.getElementById("accountHolderName").value=data.accountHolderName||"";
+
+document.getElementById("paymentDescription").value=data.paymentDescription||"";
+
+}else{
+
+await setDoc(settingsRef,{
+
+channelLink:"",
+
+adminChatLink:"",
+
+bankName:"",
+
+accountNumber:"",
+
+accountHolderName:"",
+
+paymentDescription:"",
+
+});
+
+}
+
+loader.style.display="none";
+
+}catch(error){
+
+loader.style.display="none";
+
+alert(error.message);
+
+}
+
+saveBtn.addEventListener("click",async()=>{
+
+loader.style.display="flex";
+
+try{
+
+await setDoc(settingsRef,{
+
+channelLink:document.getElementById("channelLink").value.trim(),
+
+adminChatLink:document.getElementById("adminChatLink").value.trim(),
+
+bankName:document.getElementById("bankName").value.trim(),
+
+accountNumber:document.getElementById("accountNumber").value.trim(),
+
+accountHolderName:document.getElementById("accountHolderName").value.trim(),
+
+paymentDescription:document.getElementById("paymentDescription").value.trim(),
+
+});
+
+loader.style.display="none";
+
+alert("✅ Settings saved successfully.");
+
+}catch(error){
+
+loader.style.display="none";
+
+alert(error.message);
+
+}
+
+});
+
+</script>
+
+</body>
+
+</html>
+</div>

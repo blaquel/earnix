@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+<title>Earnix</title>
+
+<title>Activate Account | Earnix</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+
+background:#050505;
+
+color:#fff;
+
+padding:20px;
+
+padding-bottom:100px;
+
+}
+
+/* Header */
+
+header{
+
+display:flex;
+
+align-items:center;
+
+gap:15px;
+
+margin-bottom:25px;
+
+}
+
+.backBtn{
+
+width:45px;
+
+height:45px;
+
+background:#111;
+
+border-radius:50%;
+
+display:flex;
+
+justify-content:center;
+
+align-items:center;
+
+text-decoration:none;
+
+color:#00ff88;
+
+font-size:18px;
+
+border:1px solid #222;
+
+}
+
+header h2{
+
+font-size:24px;
+
+font-weight:700;
+
+}
+
+/* Cards */
+
+.card{
+
+background:#111;
+
+border:1px solid #222;
+
+border-radius:18px;
+
+padding:20px;
+
+margin-bottom:20px;
+
+box-shadow:0 0 10px rgba(0,0,0,.2);
+
+}
+
+.card h3{
+
+color:#00ff88;
+
+margin-bottom:18px;
+
+font-size:18px;
+
+}
+
+.row{
+
+display:flex;
+
+justify-content:space-between;
+
+align-items:center;
+
+margin:14px 0;
+
+font-size:15px;
+
+}
+
+.row span:last-child{
+
+font-weight:600;
+
+text-align:right;
+
+word-break:break-word;
+
+}
+
+/* Buttons */
+
+.copyBtn{
+
+width:100%;
+
+padding:14px;
+
+margin-top:12px;
+
+background:#00ff88;
+
+color:#000;
+
+border:none;
+
+border-radius:12px;
+
+font-size:15px;
+
+font-weight:600;
+
+cursor:pointer;
+
+transition:.3s;
+
+}
+
+.copyBtn:hover{
+
+opacity:.9;
+
+}
+
+.submitBtn{
+
+width:100%;
+
+padding:15px;
+
+background:#00ff88;
+
+color:#000;
+
+border:none;
+
+border-radius:14px;
+
+font-size:16px;
+
+font-weight:700;
+
+cursor:pointer;
+
+margin-top:20px;
+
+transition:.3s;
+
+}
+
+.submitBtn:hover{
+
+opacity:.9;
+
+}
+
+/* Inputs */
+
+label{
+
+display:block;
+
+margin-bottom:8px;
+
+font-size:14px;
+
+}
+
+input{
+
+width:100%;
+
+padding:15px;
+
+background:#1b1b1b;
+
+border:none;
+
+border-radius:12px;
+
+color:#fff;
+
+outline:none;
+
+margin-bottom:18px;
+
+font-size:15px;
+
+}
+
+input[type=file]{
+
+padding:12px;
+
+}
+
+.note{
+
+margin-top:15px;
+
+font-size:13px;
+
+color:#9b9b9b;
+
+line-height:1.7;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+<a href="dashboard.html" class="backBtn">
+
+<i class="fa-solid fa-arrow-left"></i>
+
+</a>
+
+<h2>
+
+Account Activation
+
+</h2>
+
+</header>
+
+<!-- Activation Fee -->
+
+<div class="card">
+
+<h3>
+
+Activation Fee
+
+</h3>
+
+<div class="row">
+
+<span>Amount</span>
+
+<span id="activationFee">₦500</span>
+
+</div>
+
+</div>
+
+<!-- Bank Details -->
+
+<div class="card">
+
+<h3>
+
+Bank Details
+
+</h3>
+
+<div class="row">
+
+<span>Bank Name</span>
+
+<span id="bankName">PALMPAY</span>
+
+</div>
+
+<div class="row">
+
+<span>Account Number</span>
+
+<span id="accountNumber">
+
+8115788087
+
+</span>
+
+</div>
+
+<div class="row">
+
+<span>Account Name</span>
+
+<span id="accountHolderName">
+
+Etinosa Ehigiator
+
+</span>
+
+</div>
+
+<div class="row">
+
+<span>Description</span>
+
+<span id="paymentDescription">
+
+earnixactivate101
+
+</span>
+
+</div>
+
+<button
+class="copyBtn"
+id="copyAccount">
+
+Copy Account Number
+
+</button>
+
+<button
+class="copyBtn"
+id="copyDescription">
+
+Copy Description
+
+</button>
+
+</div>
+
+<!-- Payment Form -->
+
+<div class="card">
+
+<h3>
+
+Payment Information
+
+</h3>
+
+<label>
+
+Account Holder Name
+
+</label>
+
+<input
+type="text"
+id="accountHolder"
+placeholder="Enter the account holder's name">
+
+<button
+class="submitBtn"
+id="submitBtn">
+
+Submit Activation
+
+</button>
+
+<p class="note">
+
+• Transfer exactly <strong id="activationFeeText">₦500</strong> to the account above.<br><br>
+
+• Use <strong id="paymentDescriptionText">earnixactivate101</strong> as the payment description.<br><br>
+
+• Your account will be activated after the admin verifies your payment.
+
+</p>
+
+</div>
+
+<!-- Status Card -->
+
+<div class="card" id="statusCard" style="display:none;">
+
+<h3>
+
+Activation Status
+
+</h3>
+
+<p id="statusMessage">
+
+Checking account...
+
+</p>
+
+</div>
+
+<!-- Loading Overlay -->
+
+<div id="loader">
+
+<div class="loaderBox">
+
+<div class="spinner"></div>
+
+<h3>
+
+Processing...
+
+</h3>
+
+<p>
+
+Please wait.
+
+</p>
+
+</div>
+
+</div>
+
+<style>
+
+#statusCard{
+
+border:1px solid rgba(0,255,136,.2);
+
+}
+
+#statusMessage{
+
+line-height:1.7;
+
+color:#ddd;
+
+font-size:15px;
+
+}
+
+#loader{
+
+position:fixed;
+
+top:0;
+
+left:0;
+
+width:100%;
+
+height:100%;
+
+display:none;
+
+justify-content:center;
+
+align-items:center;
+
+background:rgba(0,0,0,.92);
+
+backdrop-filter:blur(5px);
+
+z-index:9999;
+
+}
+
+.loaderBox{
+
+width:280px;
+
+background:#111;
+
+border-radius:20px;
+
+padding:30px;
+
+text-align:center;
+
+border:1px solid rgba(0,255,136,.2);
+
+}
+
+.spinner{
+
+width:60px;
+
+height:60px;
+
+margin:auto;
+
+border-radius:50%;
+
+border:5px solid #222;
+
+border-top:5px solid #00ff88;
+
+animation:spin .8s linear infinite;
+
+margin-bottom:20px;
+
+}
+
+.loaderBox h3{
+
+margin-bottom:10px;
+
+color:#00ff88;
+
+}
+
+.loaderBox p{
+
+color:#aaa;
+
+font-size:14px;
+
+}
+
+@keyframes spin{
+
+100%{
+
+transform:rotate(360deg);
+
+}
+
+}
+
+.submitBtn:disabled{
+
+background:#555;
+
+color:#fff;
+
+cursor:not-allowed;
+
+}
+
+.copyBtn:disabled{
+
+background:#555;
+
+color:#fff;
+
+cursor:not-allowed;
+
+}
+
+input:disabled{
+
+opacity:.6;
+
+cursor:not-allowed;
+
+}
+
+</style>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
+
+import {
+getAuth,
+onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/12.15.0/firebase-auth.js";
+
+import {
+getFirestore,
+doc,
+getDoc,
+collection,
+query,
+where,
+getDocs,
+addDoc,
+serverTimestamp
+} from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
+
+const firebaseConfig={
+
+apiKey:"AIzaSyChi8M-iJaXsqOOFrwqD25aJJQoCMdaVVU",
+
+authDomain:"earnix-c7507.firebaseapp.com",
+
+projectId:"earnix-c7507",
+
+storageBucket:"earnix-c7507.firebasestorage.app",
+
+messagingSenderId:"930659607352",
+
+appId:"1:930659607352:web:4d1c3bce0cfd39d4e417cd"
+
+};
+
+const app=initializeApp(firebaseConfig);
+
+const auth=getAuth(app);
+
+const db=getFirestore(app);
+
+/* Load Admin Settings */
+
+const activationFee = 500;
+
+const settingsRef = doc(db,"settings","general");
+
+const settingsSnap = await getDoc(settingsRef);
+
+if(settingsSnap.exists()){
+
+const settings = settingsSnap.data();
+
+document.getElementById("bankName").textContent =
+settings.bankName || "";
+
+document.getElementById("accountNumber").textContent =
+settings.accountNumber || "";
+
+document.getElementById("accountHolderName").textContent =
+settings.accountHolderName || "";
+
+document.getElementById("paymentDescriptionText").textContent =
+settings.paymentDescription || "";
+
+document.getElementById("paymentDescription").textContent =
+settings.paymentDescription || "";
+
+} // <-- THIS IS MISSING
+
+const loader = document.getElementById("loader");
+const submitBtn = document.getElementById("submitBtn");
+const statusCard = document.getElementById("statusCard");
+const statusMessage = document.getElementById("statusMessage");
+
+let currentUser=null;
+
+let currentUserData=null;
+
+loader.style.display="flex";
+
+onAuthStateChanged(auth,async(user)=>{
+
+if(!user){
+
+window.location.replace("login.html");
+
+return;
+
+}
+
+currentUser=user;
+
+try{
+
+const userRef=doc(db,"users",user.uid);
+
+const userSnap=await getDoc(userRef);
+
+if(!userSnap.exists()){
+
+loader.style.display="none";
+
+alert("User record not found.");
+
+return;
+
+}
+
+currentUserData=userSnap.data();
+
+if(currentUserData.activated===true){
+
+statusCard.style.display="block";
+
+statusMessage.innerHTML="✅ Your account has already been activated.";
+
+submitBtn.disabled=true;
+
+submitBtn.innerHTML="Activated ✅";
+
+loader.style.display="none";
+
+return;
+
+}
+
+const q=query(
+
+collection(db,"activation_requests"),
+
+where("uid","==",user.uid),
+
+where("status","==","pending")
+
+);
+
+const pending=await getDocs(q);
+
+if(!pending.empty){
+
+statusCard.style.display="block";
+
+statusMessage.innerHTML="⏳ Your activation request is awaiting admin approval.";
+
+submitBtn.disabled=true;
+
+submitBtn.innerHTML="Pending Approval";
+
+loader.style.display="none";
+
+return;
+
+}
+
+loader.style.display="none";
+
+}catch(error){
+
+loader.style.display="none";
+
+alert(error.message);
+
+}
+
+});
+
+
+document.getElementById("copyAccount").onclick=async()=>{
+
+await navigator.clipboard.writeText(
+
+document.getElementById("accountNumber").textContent.trim()
+
+);
+
+const btn=document.getElementById("copyAccount");
+
+btn.innerHTML="Copied ✓";
+
+setTimeout(()=>{
+
+btn.innerHTML="Copy Account Number";
+
+},2000);
+
+};
+
+
+document.getElementById("copyDescription").onclick=async()=>{
+
+await navigator.clipboard.writeText(
+
+document.getElementById("paymentDescription").textContent.trim()
+
+);
+
+const btn=document.getElementById("copyDescription");
+
+btn.innerHTML="Copied ✓";
+
+setTimeout(()=>{
+
+btn.innerHTML="Copy Description";
+
+},2000);
+
+};
+
+
+submitBtn.addEventListener("click", async()=>{
+
+const holder=document.getElementById("accountHolder").value.trim();
+
+if(holder===""){
+    alert("Please enter the account holder name.");
+    return;
+}
+
+loader.style.display="flex";
+
+try{
+
+await addDoc(
+collection(db,"activation_requests"),
+{
+uid:currentUser.uid,
+fullname:currentUserData.fullname,
+username:currentUserData.username,
+email:currentUserData.email,
+accountHolderName:holder,
+amount:activationFee,
+status:"pending",
+createdAt:serverTimestamp()
+}
+);
+
+loader.style.display="none";
+
+statusCard.style.display="block";
+
+statusMessage.innerHTML="✅ Your activation request has been submitted successfully.<br><br>Please wait for admin approval.";
+
+submitBtn.disabled=true;
+
+submitBtn.innerHTML="Pending Approval";
+
+document.getElementById("accountHolder").disabled=true;
+
+setTimeout(()=>{
+window.location.href="dashboard.html";
+},2500);
+
+}catch(error){
+
+loader.style.display="none";
+
+console.error(error);
+
+alert(
+"Code: " + error.code +
+"\nMessage: " + error.message
+);
+
+}
+
+});
+
+</script>
+
+</body>
+
+</html>

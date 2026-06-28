@@ -1,0 +1,697 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+<title>Earnix</title>
+
+<title>My Profile | Earnix</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+background:#050505;
+color:#fff;
+padding:20px;
+padding-bottom:120px;
+}
+
+/* Header */
+
+header{
+display:flex;
+align-items:center;
+gap:15px;
+margin-bottom:25px;
+}
+
+.backBtn{
+width:45px;
+height:45px;
+background:#111;
+border:1px solid #222;
+border-radius:50%;
+display:flex;
+justify-content:center;
+align-items:center;
+text-decoration:none;
+color:#00ff88;
+font-size:18px;
+}
+
+header h2{
+font-size:24px;
+font-weight:700;
+}
+
+/* Profile Card */
+
+.profileCard{
+background:#111;
+border:1px solid #222;
+border-radius:22px;
+padding:25px;
+margin-bottom:20px;
+text-align:center;
+}
+
+.avatar{
+width:100px;
+height:100px;
+margin:auto;
+margin-bottom:15px;
+border-radius:50%;
+background:#00ff88;
+color:#000;
+display:flex;
+justify-content:center;
+align-items:center;
+font-size:42px;
+font-weight:700;
+}
+
+.changePhoto{
+display:inline-block;
+margin-top:10px;
+padding:10px 18px;
+background:#00ff88;
+color:#000;
+border-radius:12px;
+font-size:14px;
+font-weight:600;
+cursor:pointer;
+}
+
+#profileImage{
+display:none;
+}
+
+/* Form */
+
+.formCard{
+background:#111;
+border:1px solid #222;
+border-radius:22px;
+padding:20px;
+margin-bottom:20px;
+}
+
+.formGroup{
+margin-bottom:18px;
+}
+
+.formGroup label{
+display:block;
+margin-bottom:8px;
+font-size:14px;
+color:#aaa;
+}
+
+.formGroup input{
+width:100%;
+padding:15px;
+background:#1b1b1b;
+border:1px solid #333;
+border-radius:12px;
+color:#fff;
+outline:none;
+font-size:15px;
+}
+
+.formGroup input:focus{
+border-color:#00ff88;
+}
+
+.readOnly{
+opacity:.7;
+cursor:not-allowed;
+}
+
+.saveBtn{
+width:100%;
+padding:16px;
+border:none;
+border-radius:14px;
+background:#00ff88;
+color:#000;
+font-size:16px;
+font-weight:700;
+cursor:pointer;
+}
+
+/* Floating Support */
+
+.supportFloat{
+position:fixed;
+bottom:90px;
+right:20px;
+width:58px;
+height:58px;
+background:#00ff88;
+color:#000;
+border-radius:50%;
+display:flex;
+justify-content:center;
+align-items:center;
+text-decoration:none;
+font-size:24px;
+box-shadow:0 0 20px rgba(0,255,136,.4);
+animation:float 2s infinite;
+z-index:998;
+}
+
+@keyframes float{
+
+0%,100%{
+transform:translateY(0);
+}
+
+50%{
+transform:translateY(-8px);
+}
+
+}
+
+/* Bottom Navigation */
+
+.bottomNav{
+position:fixed;
+bottom:0;
+left:0;
+width:100%;
+height:70px;
+background:#111;
+border-top:1px solid #222;
+display:flex;
+justify-content:space-around;
+align-items:center;
+z-index:999;
+}
+
+.bottomNav a{
+flex:1;
+height:100%;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+text-decoration:none;
+color:#888;
+font-size:12px;
+}
+
+.bottomNav a i{
+font-size:20px;
+margin-bottom:4px;
+}
+
+.bottomNav a.active{
+color:#00ff88;
+}
+
+/* Loader */
+
+#loader{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+display:none;
+justify-content:center;
+align-items:center;
+background:rgba(0,0,0,.92);
+backdrop-filter:blur(5px);
+z-index:9999;
+}
+
+.loaderBox{
+width:280px;
+background:#111;
+padding:30px;
+border-radius:20px;
+text-align:center;
+border:1px solid rgba(0,255,136,.2);
+}
+
+.spinner{
+width:60px;
+height:60px;
+margin:auto;
+border-radius:50%;
+border:5px solid #222;
+border-top:5px solid #00ff88;
+animation:spin .8s linear infinite;
+margin-bottom:20px;
+}
+
+@keyframes spin{
+100%{
+transform:rotate(360deg);
+}
+}
+
+.loaderBox h3{
+margin-bottom:10px;
+color:#00ff88;
+}
+
+.loaderBox p{
+color:#888;
+}
+
+html,
+body{
+touch-action:manipulation;
+overflow-x:hidden;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+<a href="dashboard.html" class="backBtn">
+
+<i class="fa-solid fa-arrow-left"></i>
+
+</a>
+
+<h2>My Profile</h2>
+
+</header>
+
+<div class="profileCard">
+
+<div class="avatar" id="avatar">
+
+E
+
+</div>
+
+<input
+type="file"
+id="profileImage"
+accept="image/*">
+
+<label
+for="profileImage"
+class="changePhoto">
+
+<i class="fa-solid fa-camera"></i>
+
+Change Photo
+
+</label>
+
+</div>
+
+<div class="formCard">
+
+<div class="formGroup">
+
+<label>Full Name</label>
+
+<input
+type="text"
+id="fullname">
+
+</div>
+
+<div class="formGroup">
+
+<label>Username</label>
+
+<input
+type="text"
+id="username">
+
+</div>
+
+<div class="formGroup">
+
+<label>Email</label>
+
+<input
+type="email"
+id="email"
+class="readOnly"
+readonly>
+
+</div>
+
+<div class="formGroup">
+
+<label>Phone Number</label>
+
+<input
+type="tel"
+id="phone">
+
+</div>
+
+<div class="formGroup">
+
+<label>Bank Name</label>
+
+<input
+type="text"
+id="bankName">
+
+</div>
+
+<div class="formGroup">
+
+<label>Account Number</label>
+
+<input
+type="text"
+id="accountNumber">
+
+</div>
+
+<div class="formGroup">
+
+<label>Account Name</label>
+
+<input
+type="text"
+id="accountName">
+
+</div>
+
+<button
+class="saveBtn"
+id="saveBtn">
+
+Save Changes
+
+</button>
+
+</div>
+
+<a
+href="support.html"
+class="supportFloat">
+
+<i class="fa-solid fa-headset"></i>
+
+</a>
+
+<nav class="bottomNav">
+
+<a href="dashboard.html">
+
+<i class="fa-solid fa-house"></i>
+
+<span>Home</span>
+
+</a>
+
+<a href="wallet.html">
+
+<i class="fa-solid fa-wallet"></i>
+
+<span>Wallet</span>
+
+</a>
+
+<a href="history.html">
+
+<i class="fa-solid fa-clock-rotate-left"></i>
+
+<span>History</span>
+
+</a>
+
+<a href="profile.html" class="active">
+
+<i class="fa-solid fa-user"></i>
+
+<span>Profile</span>
+
+</a>
+
+</nav>
+
+<div id="loader">
+
+<div class="loaderBox">
+
+<div class="spinner"></div>
+
+<h3>Loading Profile...</h3>
+
+<p>Please wait...</p>
+
+</div>
+
+</div>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
+
+import {
+getAuth,
+onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/12.15.0/firebase-auth.js";
+
+import {
+getFirestore,
+doc,
+getDoc,
+updateDoc
+} from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
+
+const firebaseConfig={
+
+apiKey:"AIzaSyChi8M-iJaXsqOOFrwqD25aJJQoCMdaVVU",
+
+authDomain:"earnix-c7507.firebaseapp.com",
+
+projectId:"earnix-c7507",
+
+storageBucket:"earnix-c7507.firebasestorage.app",
+
+messagingSenderId:"930659607352",
+
+appId:"1:930659607352:web:4d1c3bce0cfd39d4e417cd"
+
+};
+
+const app=initializeApp(firebaseConfig);
+
+const auth=getAuth(app);
+
+const db=getFirestore(app);
+
+const loader=document.getElementById("loader");
+
+const saveBtn=document.getElementById("saveBtn");
+
+let currentUser=null;
+
+loader.style.display="flex";
+
+onAuthStateChanged(auth,async(user)=>{
+
+if(!user){
+
+window.location.replace("login.html");
+
+return;
+
+}
+
+currentUser=user;
+
+try{
+
+const userRef=doc(db,"users",user.uid);
+
+const userSnap=await getDoc(userRef);
+
+if(!userSnap.exists()){
+
+loader.style.display="none";
+
+alert("User not found.");
+
+return;
+
+}
+
+const data=userSnap.data();
+
+document.getElementById("fullname").value=data.fullname||"";
+
+document.getElementById("username").value=data.username||"";
+
+document.getElementById("email").value=data.email||user.email;
+
+document.getElementById("phone").value=data.phone||"";
+
+document.getElementById("bankName").value=data.bankName||"";
+
+document.getElementById("accountNumber").value=data.accountNumber||"";
+
+document.getElementById("accountName").value=data.accountName||"";
+
+const avatar=document.getElementById("avatar");
+
+const name=data.fullname||data.username||"E";
+
+avatar.innerHTML=name.charAt(0).toUpperCase();
+
+loader.style.display="none";
+
+}catch(error){
+
+loader.style.display="none";
+
+alert(error.message);
+
+}
+
+});
+
+/* Continue in Part 3 */
+
+saveBtn.addEventListener("click",async()=>{
+
+const fullname=document.getElementById("fullname").value.trim();
+
+const username=document.getElementById("username").value.trim();
+
+const phone=document.getElementById("phone").value.trim();
+
+const bankName=document.getElementById("bankName").value.trim();
+
+const accountNumber=document.getElementById("accountNumber").value.trim();
+
+const accountName=document.getElementById("accountName").value.trim();
+
+if(fullname===""){
+
+alert("Please enter your full name.");
+
+return;
+
+}
+
+if(username===""){
+
+alert("Please enter your username.");
+
+return;
+
+}
+
+loader.style.display="flex";
+
+saveBtn.disabled=true;
+
+try{
+
+await updateDoc(
+
+doc(db,"users",currentUser.uid),
+
+{
+
+fullname:fullname,
+
+username:username,
+
+phone:phone,
+
+bankName:bankName,
+
+accountNumber:accountNumber,
+
+accountName:accountName,
+
+updatedAt:new Date()
+
+}
+
+);
+
+loader.style.display="none";
+
+saveBtn.disabled=false;
+
+const avatar=document.getElementById("avatar");
+
+avatar.innerHTML=fullname.charAt(0).toUpperCase();
+
+alert("✅ Profile updated successfully.");
+
+}catch(error){
+
+loader.style.display="none";
+
+saveBtn.disabled=false;
+
+alert(error.message);
+
+}
+
+});
+
+/* Preview Selected Profile Picture */
+
+document.getElementById("profileImage").addEventListener("change",function(){
+
+const file=this.files[0];
+
+if(!file) return;
+
+const reader=new FileReader();
+
+reader.onload=function(e){
+
+const avatar=document.getElementById("avatar");
+
+avatar.innerHTML="";
+
+avatar.style.backgroundImage=`url(${e.target.result})`;
+
+avatar.style.backgroundSize="cover";
+
+avatar.style.backgroundPosition="center";
+
+};
+
+reader.readAsDataURL(file);
+
+});
+
+</script>
+
+</body>
+
+</html>

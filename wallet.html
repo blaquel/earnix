@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+<title>Earnix</title>
+
+<title>My Wallet | Earnix</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+background:#050505;
+color:#fff;
+padding:20px;
+padding-bottom:120px;
+}
+
+/* Header */
+
+header{
+display:flex;
+align-items:center;
+gap:15px;
+margin-bottom:25px;
+}
+
+.backBtn{
+width:45px;
+height:45px;
+background:#111;
+border:1px solid #222;
+border-radius:50%;
+display:flex;
+justify-content:center;
+align-items:center;
+text-decoration:none;
+color:#00ff88;
+font-size:18px;
+}
+
+header h2{
+font-size:24px;
+font-weight:700;
+}
+
+/* Wallet Card */
+
+.walletCard{
+background:linear-gradient(135deg,#00ff88,#00cc6a);
+color:#000;
+border-radius:22px;
+padding:25px;
+margin-bottom:20px;
+box-shadow:0 10px 25px rgba(0,255,136,.25);
+}
+
+.walletCard p{
+font-size:15px;
+opacity:.8;
+margin-bottom:8px;
+}
+
+.walletBalance{
+font-size:38px;
+font-weight:700;
+margin-bottom:25px;
+}
+
+.walletActions{
+display:flex;
+gap:12px;
+}
+
+.walletBtn{
+flex:1;
+height:48px;
+border:none;
+border-radius:12px;
+background:#000;
+color:#00ff88;
+font-size:15px;
+font-weight:600;
+text-decoration:none;
+display:flex;
+justify-content:center;
+align-items:center;
+gap:8px;
+}
+
+/* Stats */
+
+.stats{
+display:grid;
+grid-template-columns:1fr 1fr;
+gap:15px;
+margin-bottom:25px;
+}
+
+.statCard{
+background:#111;
+border:1px solid #222;
+border-radius:18px;
+padding:18px;
+}
+
+.statCard p{
+color:#999;
+font-size:13px;
+margin-bottom:10px;
+}
+
+.statCard h3{
+font-size:24px;
+color:#00ff88;
+}
+
+/* Transactions */
+
+.sectionTitle{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:15px;
+}
+
+.sectionTitle h3{
+font-size:20px;
+}
+
+.transactionCard{
+background:#111;
+border:1px solid #222;
+border-radius:18px;
+padding:18px;
+margin-bottom:15px;
+}
+
+.transTop{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:10px;
+}
+
+.transTitle{
+font-weight:600;
+font-size:16px;
+}
+
+.transAmount{
+font-weight:700;
+color:#00ff88;
+}
+
+.transDate{
+font-size:13px;
+color:#888;
+margin-top:10px;
+}
+
+.status{
+display:inline-block;
+padding:6px 12px;
+border-radius:30px;
+font-size:12px;
+margin-top:12px;
+font-weight:600;
+}
+
+.pending{
+background:#ffc107;
+color:#000;
+}
+
+.approved{
+background:#00ff88;
+color:#000;
+}
+
+.rejected{
+background:#ff3b30;
+color:#fff;
+}
+
+/* Empty */
+
+#emptyState{
+display:none;
+text-align:center;
+padding:60px 20px;
+color:#777;
+}
+
+#emptyState i{
+font-size:70px;
+margin-bottom:20px;
+color:#333;
+}
+
+/* Floating Support */
+
+.supportFloat{
+position:fixed;
+bottom:90px;
+right:20px;
+width:58px;
+height:58px;
+background:#00ff88;
+border-radius:50%;
+display:flex;
+justify-content:center;
+align-items:center;
+text-decoration:none;
+color:#000;
+font-size:24px;
+box-shadow:0 0 18px rgba(0,255,136,.4);
+animation:float 2s ease-in-out infinite;
+z-index:998;
+}
+
+@keyframes float{
+
+0%,100%{
+transform:translateY(0);
+}
+
+50%{
+transform:translateY(-8px);
+}
+
+}
+
+/* Bottom Navigation */
+
+.bottomNav{
+position:fixed;
+left:0;
+bottom:0;
+width:100%;
+height:70px;
+background:#111;
+border-top:1px solid #222;
+display:flex;
+justify-content:space-around;
+align-items:center;
+z-index:999;
+}
+
+.bottomNav a{
+flex:1;
+height:100%;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+text-decoration:none;
+color:#888;
+font-size:12px;
+}
+
+.bottomNav a i{
+font-size:21px;
+margin-bottom:4px;
+}
+
+.bottomNav .active{
+color:#00ff88;
+}
+
+/* Loader */
+
+#loader{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+display:none;
+justify-content:center;
+align-items:center;
+background:rgba(0,0,0,.92);
+backdrop-filter:blur(5px);
+z-index:9999;
+}
+
+.loaderBox{
+width:280px;
+background:#111;
+padding:30px;
+border-radius:20px;
+text-align:center;
+border:1px solid rgba(0,255,136,.2);
+}
+
+.spinner{
+width:60px;
+height:60px;
+margin:auto;
+border-radius:50%;
+border:5px solid #222;
+border-top:5px solid #00ff88;
+animation:spin .8s linear infinite;
+margin-bottom:20px;
+}
+
+@keyframes spin{
+100%{
+transform:rotate(360deg);
+}
+}
+
+.loaderBox h3{
+margin-bottom:10px;
+color:#00ff88;
+}
+
+.loaderBox p{
+color:#888;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+<a href="dashboard.html" class="backBtn">
+
+<i class="fa-solid fa-arrow-left"></i>
+
+</a>
+
+<h2>My Wallet</h2>
+
+</header>
+
+<div class="walletCard">
+
+<p>Available Balance</p>
+
+<div class="walletBalance" id="walletBalance">
+
+₦0
+
+</div>
+
+<div class="walletActions">
+
+<a href="withdraw.html" class="walletBtn">
+
+<i class="fa-solid fa-money-bill-wave"></i>
+
+Withdraw
+
+</a>
+
+<a href="history.html" class="walletBtn">
+
+<i class="fa-solid fa-clock-rotate-left"></i>
+
+History
+
+</a>
+
+</div>
+
+</div>
+
+<div class="stats">
+
+<div class="statCard">
+
+<p>Total Earnings</p>
+
+<h3 id="earnings">₦0</h3>
+
+</div>
+
+<div class="statCard">
+
+<p>Referral Bonus</p>
+
+<h3 id="refBonus">₦0</h3>
+
+</div>
+
+</div>
+
+<div class="sectionTitle">
+
+<h3>Recent Transactions</h3>
+
+</div>
+
+<div id="transactionContainer">
+
+</div>
+
+<div id="emptyState">
+
+<i class="fa-solid fa-wallet"></i>
+
+<h3>No Transactions</h3>
+
+<p>Your transactions will appear here.</p>
+
+</div>
+
+<a href="support.html" class="supportFloat">
+
+<i class="fa-solid fa-headset"></i>
+
+</a>
+
+<nav class="bottomNav">
+
+<a href="dashboard.html">
+
+<i class="fa-solid fa-house"></i>
+
+<span>Home</span>
+
+</a>
+
+<a href="wallet.html" class="active">
+
+<i class="fa-solid fa-wallet"></i>
+
+<span>Wallet</span>
+
+</a>
+
+<a href="history.html">
+
+<i class="fa-solid fa-clock-rotate-left"></i>
+
+<span>History</span>
+
+</a>
+
+<a href="profile.html">
+
+<i class="fa-solid fa-user"></i>
+
+<span>Profile</span>
+
+</a>
+
+</nav>
+
+<div id="loader">
+
+<div class="loaderBox">
+
+<div class="spinner"></div>
+
+<h3>Loading Wallet...</h3>
+
+<p>Please wait...</p>
+
+</div>
+
+</div>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
+
+import {
+getAuth,
+onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/12.15.0/firebase-auth.js";
+
+import {
+getFirestore,
+doc,
+getDoc,
+collection,
+query,
+where,
+getDocs
+} from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
+
+const firebaseConfig={
+
+apiKey:"AIzaSyChi8M-iJaXsqOOFrwqD25aJJQoCMdaVVU",
+
+authDomain:"earnix-c7507.firebaseapp.com",
+
+projectId:"earnix-c7507",
+
+storageBucket:"earnix-c7507.firebasestorage.app",
+
+messagingSenderId:"930659607352",
+
+appId:"1:930659607352:web:4d1c3bce0cfd39d4e417cd"
+
+};
+
+const app=initializeApp(firebaseConfig);
+
+const auth=getAuth(app);
+
+const db=getFirestore(app);
+
+const loader=document.getElementById("loader");
+
+const walletBalance=document.getElementById("walletBalance");
+
+const earnings=document.getElementById("earnings");
+
+const refBonus=document.getElementById("refBonus");
+
+const transactionContainer=document.getElementById("transactionContainer");
+
+const emptyState=document.getElementById("emptyState");
+
+let transactions=[];
+
+loader.style.display="flex";
+
+onAuthStateChanged(auth,async(user)=>{
+
+if(!user){
+
+window.location.replace("login.html");
+
+return;
+
+}
+
+try{
+
+const userRef=doc(db,"users",user.uid);
+
+const userSnap=await getDoc(userRef);
+
+if(!userSnap.exists()){
+
+loader.style.display="none";
+
+alert("User account not found.");
+
+return;
+
+}
+
+const userData=userSnap.data();
+
+walletBalance.innerHTML="₦"+Number(userData.balance||0).toLocaleString();
+
+earnings.innerHTML="₦"+Number(userData.totalEarnings||0).toLocaleString();
+
+refBonus.innerHTML="₦"+Number(userData.referralBonus||0).toLocaleString();
+
+/* Wallet Transactions */
+
+const withdrawQuery=query(
+
+collection(db,"withdrawals"),
+
+where("uid","==",user.uid)
+
+);
+
+const withdrawSnap=await getDocs(withdrawQuery);
+
+withdrawSnap.forEach(doc=>{
+
+transactions.push({
+
+type:"Withdrawal",
+
+...doc.data()
+
+});
+
+});
+
+const activationQuery=query(
+
+collection(db,"activation_requests"),
+
+where("uid","==",user.uid)
+
+);
+
+const activationSnap=await getDocs(activationQuery);
+
+activationSnap.forEach(doc=>{
+
+transactions.push({
+
+type:"Activation",
+
+...doc.data()
+
+});
+
+});
+
+transactions.sort((a,b)=>{
+
+const aTime=a.createdAt?.seconds||0;
+
+const bTime=b.createdAt?.seconds||0;
+
+return bTime-aTime;
+
+});
+
+/* Continue in Part 2B */
+
+if(transactions.length===0){
+
+loader.style.display="none";
+
+emptyState.style.display="block";
+
+}else{
+
+emptyState.style.display="none";
+
+transactionContainer.innerHTML="";
+
+transactions.forEach(item=>{
+
+let statusClass="pending";
+
+if(item.status==="approved") statusClass="approved";
+
+if(item.status==="rejected") statusClass="rejected";
+
+const amount=Number(item.amount||0).toLocaleString();
+
+const date=item.createdAt
+?new Date(item.createdAt.seconds*1000).toLocaleString()
+:"-";
+
+transactionContainer.innerHTML+=`
+
+<div class="transactionCard">
+
+<div class="transTop">
+
+<div class="transTitle">
+
+${item.type}
+
+</div>
+
+<div class="transAmount">
+
+₦${amount}
+
+</div>
+
+</div>
+
+${item.type==="Withdrawal"?`
+
+<div>
+
+Bank: ${item.bankName||"-"}
+
+</div>
+
+<div>
+
+Account No: ${item.accountNumber||"-"}
+
+</div>
+
+`:`
+
+<div>
+
+Account Holder: ${item.accountHolderName||"-"}
+
+</div>
+
+`}
+
+<div class="status ${statusClass}">
+
+${item.status.charAt(0).toUpperCase()+item.status.slice(1)}
+
+</div>
+
+<div class="transDate">
+
+${date}
+
+</div>
+
+</div>
+
+`;
+
+});
+
+loader.style.display="none";
+
+}
+
+}catch(error){
+
+loader.style.display="none";
+
+alert(error.message);
+
+}
+
+});
+
+</script>
+
+</body>
+
+</html>

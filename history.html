@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+<title>Earnix</title>
+
+<title>Earnix - History</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"/>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Poppins',sans-serif;
+}
+
+body{
+background:#050505;
+color:#fff;
+padding:20px;
+padding-bottom:90px;
+}
+
+/* Header */
+
+header{
+display:flex;
+align-items:center;
+gap:15px;
+margin-bottom:25px;
+}
+
+.backBtn{
+width:45px;
+height:45px;
+border-radius:50%;
+background:#111;
+border:1px solid #222;
+display:flex;
+justify-content:center;
+align-items:center;
+text-decoration:none;
+color:#00ff88;
+font-size:18px;
+}
+
+header h2{
+font-size:24px;
+font-weight:700;
+}
+
+header p{
+font-size:13px;
+color:#888;
+margin-top:4px;
+}
+
+/* History Card */
+
+.historyCard{
+background:#111;
+border:1px solid #222;
+border-radius:18px;
+padding:18px;
+margin-bottom:16px;
+}
+
+.historyTop{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:12px;
+}
+
+.historyTitle{
+font-size:17px;
+font-weight:600;
+color:#00ff88;
+}
+
+.historyAmount{
+font-size:18px;
+font-weight:700;
+}
+
+.historyInfo{
+font-size:14px;
+color:#aaa;
+margin-bottom:8px;
+}
+
+.historyDate{
+font-size:12px;
+color:#666;
+margin-top:10px;
+}
+
+/* Status */
+
+.status{
+padding:6px 12px;
+border-radius:20px;
+font-size:12px;
+font-weight:600;
+}
+
+.pending{
+background:#ffc107;
+color:#000;
+}
+
+.approved{
+background:#00ff88;
+color:#000;
+}
+
+.rejected{
+background:#ff3b30;
+color:#fff;
+}
+
+/* Empty */
+
+#emptyState{
+display:none;
+text-align:center;
+margin-top:90px;
+color:#777;
+}
+
+#emptyState i{
+font-size:70px;
+margin-bottom:20px;
+color:#333;
+}
+
+/* Bottom Navigation */
+
+.bottomNav{
+position:fixed;
+left:0;
+bottom:0;
+width:100%;
+height:70px;
+background:#111;
+border-top:1px solid #222;
+display:flex;
+justify-content:space-around;
+align-items:center;
+z-index:999;
+}
+
+.bottomNav a{
+flex:1;
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+text-decoration:none;
+color:#888;
+font-size:12px;
+height:100%;
+}
+
+.bottomNav a i{
+font-size:21px;
+margin-bottom:4px;
+}
+
+.bottomNav a.active{
+color:#00ff88;
+}
+
+/* Loader */
+
+#loader{
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+display:none;
+justify-content:center;
+align-items:center;
+background:rgba(0,0,0,.92);
+backdrop-filter:blur(5px);
+z-index:9999;
+}
+
+.loaderBox{
+width:280px;
+background:#111;
+padding:30px;
+border-radius:20px;
+text-align:center;
+border:1px solid rgba(0,255,136,.2);
+}
+
+.spinner{
+width:60px;
+height:60px;
+margin:auto;
+border-radius:50%;
+border:5px solid #222;
+border-top:5px solid #00ff88;
+animation:spin .8s linear infinite;
+margin-bottom:20px;
+}
+
+@keyframes spin{
+100%{
+transform:rotate(360deg);
+}
+}
+
+.loaderBox h3{
+margin-bottom:10px;
+color:#00ff88;
+}
+
+.loaderBox p{
+color:#888;
+font-size:14px;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<header>
+
+<a href="dashboard.html" class="backBtn">
+
+<i class="fa-solid fa-arrow-left"></i>
+
+</a>
+
+<div>
+
+<h2>History</h2>
+
+<p>Your account activities</p>
+
+</div>
+
+</header>
+
+<div id="historyContainer">
+
+<!-- Firebase loads history here -->
+
+</div>
+
+<div id="emptyState">
+
+<i class="fa-solid fa-clock-rotate-left"></i>
+
+<h3>No History Yet</h3>
+
+<p>Your activities will appear here.</p>
+
+</div>
+
+<nav class="bottomNav">
+
+<a href="dashboard.html">
+
+<i class="fa-solid fa-house"></i>
+
+<span>Home</span>
+
+</a>
+
+<a href="history.html" class="active">
+
+<i class="fa-solid fa-clock-rotate-left"></i>
+
+<span>History</span>
+
+</a>
+
+<a href="withdraw.html">
+
+<i class="fa-solid fa-wallet"></i>
+
+<span>Wallet</span>
+
+</a>
+
+<a href="profile.html">
+
+<i class="fa-solid fa-user"></i>
+
+<span>Profile</span>
+
+</a>
+
+</nav>
+
+<div id="loader">
+
+<div class="loaderBox">
+
+<div class="spinner"></div>
+
+<h3>Loading History...</h3>
+
+<p>Please wait...</p>
+
+</div>
+
+</div>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.15.0/firebase-app.js";
+
+import {
+getAuth,
+onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/12.15.0/firebase-auth.js";
+
+import {
+getFirestore,
+collection,
+query,
+where,
+getDocs
+} from "https://www.gstatic.com/firebasejs/12.15.0/firebase-firestore.js";
+
+const firebaseConfig={
+
+apiKey:"AIzaSyChi8M-iJaXsqOOFrwqD25aJJQoCMdaVVU",
+
+authDomain:"earnix-c7507.firebaseapp.com",
+
+projectId:"earnix-c7507",
+
+storageBucket:"earnix-c7507.firebasestorage.app",
+
+messagingSenderId:"930659607352",
+
+appId:"1:930659607352:web:4d1c3bce0cfd39d4e417cd"
+
+};
+
+const app=initializeApp(firebaseConfig);
+
+const auth=getAuth(app);
+
+const db=getFirestore(app);
+
+const loader=document.getElementById("loader");
+
+const historyContainer=document.getElementById("historyContainer");
+
+const emptyState=document.getElementById("emptyState");
+
+let history=[];
+
+loader.style.display="flex";
+
+onAuthStateChanged(auth,async(user)=>{
+
+if(!user){
+
+window.location.replace("login.html");
+
+return;
+
+}
+
+try{
+
+/* Activation History */
+
+const activationQuery=query(
+
+collection(db,"activation_requests"),
+
+where("uid","==",user.uid)
+
+);
+
+const activationSnap=await getDocs(activationQuery);
+
+activationSnap.forEach(doc=>{
+
+history.push({
+
+type:"Activation",
+
+...doc.data()
+
+});
+
+});
+
+/* Withdrawal History */
+
+const withdrawalQuery=query(
+
+collection(db,"withdrawals"),
+
+where("uid","==",user.uid)
+
+);
+
+const withdrawalSnap=await getDocs(withdrawalQuery);
+
+withdrawalSnap.forEach(doc=>{
+
+history.push({
+
+type:"Withdrawal",
+
+...doc.data()
+
+});
+
+});
+
+/* Sort Latest First */
+
+history.sort((a,b)=>{
+
+const aTime=a.createdAt?.seconds||0;
+
+const bTime=b.createdAt?.seconds||0;
+
+return bTime-aTime;
+
+});
+
+/* Continue in Part 2B */
+
+function formatDate(timestamp){
+
+if(!timestamp) return "-";
+
+const date=new Date(timestamp.seconds*1000);
+
+return date.toLocaleString();
+
+}
+
+if(history.length===0){
+
+loader.style.display="none";
+
+emptyState.style.display="block";
+
+}else{
+
+emptyState.style.display="none";
+
+historyContainer.innerHTML="";
+
+history.forEach(item=>{
+
+let statusClass="pending";
+
+if(item.status==="approved") statusClass="approved";
+
+if(item.status==="rejected") statusClass="rejected";
+
+historyContainer.innerHTML+=`
+
+<div class="historyCard">
+
+<div class="historyTop">
+
+<div class="historyTitle">
+
+${item.type}
+
+</div>
+
+<div class="status ${statusClass}">
+
+${item.status.charAt(0).toUpperCase()+item.status.slice(1)}
+
+</div>
+
+</div>
+
+<div class="historyInfo">
+
+Amount: <strong>₦${Number(item.amount||500).toLocaleString()}</strong>
+
+</div>
+
+${item.type==="Withdrawal"?`
+
+<div class="historyInfo">
+
+Bank: ${item.bankName||"-"}
+
+</div>
+
+<div class="historyInfo">
+
+Account Number: ${item.accountNumber||"-"}
+
+</div>
+
+`:`
+<div class="historyInfo">
+
+Account Holder: ${item.accountHolderName||"-"}
+
+</div>
+
+`}
+
+<div class="historyDate">
+
+${formatDate(item.createdAt)}
+
+</div>
+
+</div>
+
+`;
+
+});
+
+loader.style.display="none";
+
+}
+
+}catch(error){
+
+loader.style.display="none";
+
+alert(error.message);
+
+}
+
+});
+
+</script>
+
+</body>
+
+</html>
